@@ -1,0 +1,139 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "b104709b-c8ac-49d4-af44-ea37af7a2c9d",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -256,
+        -592
+      ],
+      "id": "8200a8ae-fef9-4862-b1e2-1f9e7474f15c",
+      "name": "Webhook",
+      "webhookId": "b104709b-c8ac-49d4-af44-ea37af7a2c9d",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyHour"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {
+          "dataLocationOnSheet": {
+            "values": {
+              "rangeDefinition": "specifyRangeA1"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        96
+      ],
+      "id": "2c455e30-1384-44a0-8018-e2018a6e805e",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "0JedTmmyC15MnMUA",
+          "name": "Google Sheets Trigger account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "assistant",
+        "assistantId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -192,
+        96
+      ],
+      "id": "444c97dd-17e7-41f4-b7a1-bd8bbf9ec02d",
+      "name": "Message an assistant",
+      "credentials": {
+        "openAiApi": {
+          "id": "I14PwIZIWGCjDVii",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "คุณได้รับภาพที่มีข้อความภาษาไทยจากเอกสารทางการศึกษา  \nโปรดอ่านข้อความทั้งหมดในภาพ แล้วถอดออกมาเป็นข้อความตัวอักษร (OCR)  \nอย่าแปลหรือสรุป — ให้พิมพ์ข้อความตามต้นฉบับให้มากที่สุด  \nจัดรูปแบบให้เหมือนเอกสารจริง (เช่น บรรทัดใหม่, ตัวเลข, หัวข้อ)  \nถ้ามีหัวข้อ ให้คงไว้ เช่น \"ข้อ 19.8\" หรือ \"ระดับปริญญาตรี\"  \nอย่าเพิ่มคำอธิบายอื่นนอกจากข้อความจากภาพ",
+        "url": "https://chatgpt.com/share/68e20c2c-1328-8010-ad37-0f4ef73e8108",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -96,
+        256
+      ],
+      "id": "80693282-25b4-4d5c-a63c-d540c48ce9f3",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Message an assistant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "ai_tool": [
+        [
+          {
+            "node": "Message an assistant",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "88db5442-807b-40da-bba1-c7caf1af2f19",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4c73df3bdbd7296e0099bb25889daa52df734a762e90093ee865d69b222d5c6a"
+  },
+  "id": "G8T9shsio2vwcfmk",
+  "tags": []
+}
