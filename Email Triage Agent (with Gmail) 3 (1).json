@@ -1,0 +1,370 @@
+{
+  "name": "Email Triage Agent (with Gmail) 3",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1ir4WzsHulHgTCDb2-6nuT_IEg2MvmRo1ngtJSiIO4rE",
+          "mode": "list",
+          "cachedResultName": "ผลจากแบบสอบถาม",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ir4WzsHulHgTCDb2-6nuT_IEg2MvmRo1ngtJSiIO4rE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1054058293,
+          "mode": "list",
+          "cachedResultName": "Form Responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ir4WzsHulHgTCDb2-6nuT_IEg2MvmRo1ngtJSiIO4rE/edit#gid=1054058293"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "ชื่อ"
+          ],
+          "schema": [
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ชื่อ",
+              "displayName": "ชื่อ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "นามสกุล",
+              "displayName": "นามสกุล",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ชั้นปี",
+              "displayName": "ชั้นปี",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "เกรดเฉลี่ย",
+              "displayName": "เกรดเฉลี่ย",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "หน่วยกิต",
+              "displayName": "หน่วยกิต",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "prompt",
+              "displayName": "prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "useAppend": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -624,
+        -16
+      ],
+      "id": "6b80973f-d7db-482a-b727-d510c8ffb176",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "gJrwDwjq11z5EncF",
+          "name": "Google Sheets account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "assistant",
+        "operation": "create",
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1"
+        },
+        "name": "ประมวลผล",
+        "description": "ประมวลผลพ้นสภาพนิสิต",
+        "instructions": "คุณได้รับภาพที่มีข้อความภาษาไทยจากเอกสารทางการศึกษา  \nโปรดอ่านข้อความทั้งหมดในภาพ แล้วถอดออกมาเป็นข้อความตัวอักษร (OCR)  \nอย่าแปลหรือสรุป — ให้พิมพ์ข้อความตามต้นฉบับให้มากที่สุด  \nจัดรูปแบบให้เหมือนเอกสารจริง (เช่น บรรทัดใหม่, ตัวเลข, หัวข้อ)  \nถ้ามีหัวข้อ ให้คงไว้ เช่น \"ข้อ 19.8\" หรือ \"ระดับปริญญาตรี\"  \nอย่าเพิ่มคำอธิบายอื่นนอกจากข้อความจากภาพ  \n",
+        "codeInterpreter": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -416,
+        -16
+      ],
+      "id": "18402e7b-6eb6-4790-b652-947353edd37a",
+      "name": "Create an assistant",
+      "credentials": {
+        "openAiApi": {
+          "id": "sCxNoC5yVTPdElvy",
+          "name": "OpenAi account 7"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "public": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -848,
+        -16
+      ],
+      "id": "cd2f66b5-8300-4172-a867-75095bb764a1",
+      "name": "When chat message received",
+      "webhookId": "cd4713ef-e389-4342-a1ea-893375ae9a08",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "reply",
+        "messageId": "คุณได้รับภาพที่มีข้อความภาษาไทยจากเอกสารทางการศึกษา  \\nโปรดอ่านข้อความทั้งหมดในภาพ แล้วถอดออกมาเป็นข้อความตัวอักษร (OCR)  \\nอย่าแปลหรือสรุป — ให้พิมพ์ข้อความตามต้นฉบับให้มากที่สุด  \\nจัดรูปแบบให้เหมือนเอกสารจริง (เช่น บรรทัดใหม่, ตัวเลข, หัวข้อ)  \\nถ้ามีหัวข้อ ให้คงไว้ เช่น \\\"ข้อ 19.8\\\" หรือ \\\"ระดับปริญญาตรี",
+        "emailType": "text",
+        "message": "ระบบตอบอัตโนมัติ: ได้รับอีเมลของคุณแล้วค่ะ ไปลาออกสะ 🙏",
+        "options": {
+          "appendAttribution": true,
+          "replyToSenderOnly": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -80,
+        64
+      ],
+      "id": "ed317bbe-4f43-4dbc-9a86-fb79d70d801d",
+      "name": "Reply to a message",
+      "webhookId": "399a3fd1-44c2-4d56-a247-e5bccf75fab3",
+      "alwaysOutputData": true,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "fXkCAyK5YMxmCj0a",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyHour"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {
+          "readStatus": "unread"
+        },
+        "options": {}
+      },
+      "id": "234fe30a-1b2c-40d3-b213-4f262e9d2707",
+      "name": "New Email Trigger",
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -832,
+        176
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "fXkCAyK5YMxmCj0a",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Categorize this email:\n\n**From:** {{ $json.from.value[0].address }}\n**Subject:** {{ $json.subject }}\n**Content:** \n{{ $json.html }}\n\nPlease analyze this email and apply appropriate labels using the available tools.",
+        "options": {
+          "systemMessage": "=You are an email categorization assistant. Your task is to analyze emails and apply appropriate labels to help organize the user's inbox.\n\nYou have access to two tools:\n1. **Get all Labels** - Retrieves available email labels\n2. **Add Labels** - Applies labels to emails\n\n### Instructions:\n- First, always use \"Get all Labels\" to see available categories\n- Analyze email content for: subject, sender, keywords, and context\n- Apply 1-3 most relevant labels per email\n- Be consistent in categorization patterns\n- If unsure between labels, choose the most specific one\n\n### Response Format:\n1. Brief summary of email content (1 sentence)\n2. Chosen labels with reasoning\n3. Use \"Add Labels\" tool with selected labels\n\nBe efficient and accurate. Focus on helping the user maintain an organized inbox."
+        }
+      },
+      "id": "9b8b3659-83ad-40c1-a753-528b6b711266",
+      "name": "Email Classification Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -624,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": "={{ $fromAI('Label_Names_or_IDs', `Array of Gmail label ids to add. Use the id field from the \"Get all labels\" tool`, 'string') }}"
+      },
+      "id": "03279ba6-eb9f-46ca-a004-057e8fe1d698",
+      "name": "Add Label",
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        -496,
+        416
+      ],
+      "webhookId": "e7289911-d937-45bd-9e91-410a0dc959f8",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "fXkCAyK5YMxmCj0a",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Use this tool to get all existing labels from Gmail",
+        "resource": "label",
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        -368,
+        416
+      ],
+      "id": "e2fb87f2-3e5a-4263-b88c-5e64c2fa3784",
+      "name": "Get all Labels",
+      "webhookId": "291b9995-7ae1-4f65-9ffb-ba62c980b829",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "fXkCAyK5YMxmCj0a",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Append or update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Create an assistant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an assistant": {
+      "main": [
+        []
+      ]
+    },
+    "Reply to a message": {
+      "main": [
+        []
+      ]
+    },
+    "New Email Trigger": {
+      "main": [
+        [
+          {
+            "node": "Email Classification Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Label": {
+      "ai_tool": [
+        [
+          {
+            "node": "Email Classification Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get all Labels": {
+      "ai_tool": [
+        [
+          {
+            "node": "Email Classification Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Classification Agent": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "e07a0522-9d79-4ecd-b0e9-7ed15b4e9679",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4c73df3bdbd7296e0099bb25889daa52df734a762e90093ee865d69b222d5c6a"
+  },
+  "id": "tozsjIwdP5F24r2s",
+  "tags": []
+}
